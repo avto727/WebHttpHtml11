@@ -7,13 +7,14 @@ exports.config = {
      */
     //seleniumServerJar: "node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
     directConnect: true,
-    
+//Задаем файлы со спеками
     specs: ['specs/*Spec.js'],
+//Задаем базовый адрес страницы
     baseUrl: 'http://qualityshepherd.com',
     framework: 'jasmine2',
 
     onPrepare: function(){
-        // set browser size...
+        // set browser size...Задаем параметры браузера
         browser.manage().window().setSize(1024, 800);
 
         // better jasmine 2 reports...
