@@ -1,29 +1,25 @@
-// solves `SyntaxError: Unexpected token import`
-require("babel-register")({
-    presets: [ 'es2015' ]
-});
 
 exports.config = {
     /**
      *  Uncomment ONE of the following to connect to: seleniumServerJar OR directConnect. Protractor
      *  will auto-start selenium if you uncomment the jar, or connect directly to chrome/firefox
-     *  if you uncomment directConnect.
+     *  if you uncomment directConnect. 
      */
-    //seleniumServerJar: "node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.4.0.jar",
+    //seleniumServerJar: "node_modules/protractor/node_modules/webdriver-manager/selenium/selenium-server-standalone-3.3.1.jar",
     directConnect: true,
-    SELENIUM_PROMISE_MANAGER: false,
-
+//Задаем файлы со спеками
     specs: ['specs/*Spec.js'],
-    baseUrl: 'https://qualityshepherd.com',
-    framework: 'jasmine',
+//Задаем базовый адрес страницы
+    baseUrl: 'http://qualityshepherd.com',
+    framework: 'jasmine2',
 
-    onPrepare: () => {
-        const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-        jasmine.getEnv().addReporter(new SpecReporter({
-            spec: {
-                displayStacktrace: true
-            }
-        }));
+    onPrepare: function(){
+        // set browser size...Задаем параметры браузера
+        browser.manage().window().setSize(1024, 800);
+
+        // better jasmine 2 reports...
+        var SpecReporter = require('jasmine-spec-reporter');
+        jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'spec'}));
     },
 
     capabilities: {
@@ -35,7 +31,7 @@ exports.config = {
                 // disable chrome's wakiness
                 '--disable-infobars',
                 '--disable-extensions',
-                'verbose',
+                'verbose', 
                 'log-path=/tmp/chromedriver.log'
             ],
             prefs: {
@@ -49,9 +45,10 @@ exports.config = {
 
     jasmineNodeOpts: {
         showColors: true,
+        displayStacktrace: true,
         displaySpecDuration: true,
         // overrides jasmine's print method to report dot syntax for custom reports
-        print: () => {},
+        print: function () {},
         defaultTimeoutInterval: 50000
     }
 };
